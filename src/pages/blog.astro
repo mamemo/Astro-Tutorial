@@ -3,29 +3,14 @@ import { getCollection } from "astro:content";
 import Main from "../components/Main.astro";
 import Layout from "../layouts/Layout.astro";
 import H1 from "../components/H1.astro";
+import PostList from "../components/PostList.astro";
 
-interface Post {
-    slug: string;
-    data: {
-        author: string;
-        date: string;
-        image: string;
-        title: string;
-    };
-}
-
-const posts: Post[] = await getCollection("posts");
+const posts = await getCollection("posts");
 ---
 
 <Layout title="Blog | Rhythm Nation">
     <Main>
         <H1 text="Rhythm Nation Blog" />
-        {
-            posts.map((post) => (
-                <a href={`/blog/${post.slug}`}>
-                    <h2>{post.data.title}</h2>
-                </a>
-            ))
-        }
+        <PostList posts={posts} />
     </Main>
 </Layout>
